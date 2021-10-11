@@ -9,7 +9,6 @@ namespace HW._03.Birthday
             int birthYear, birthMonth, curYear, curMonth;
             string tempStr;
 
-
             Console.WriteLine("Введите год рождения");
             tempStr = Console.ReadLine();
 
