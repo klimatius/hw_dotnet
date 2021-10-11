@@ -93,7 +93,6 @@ namespace HW._03.Calculator
             {
                 Console.WriteLine("Радиус введен некорректно");
             }
-
         }
     }
 
@@ -128,5 +127,4 @@ namespace HW._03.Calculator
             return Math.PI * x * x;
         }
     }
-
 }
