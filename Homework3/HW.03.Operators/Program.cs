@@ -259,42 +259,26 @@ namespace HW._03.Operators
             char sym;
             string result = default, tmp;
             bool flag = true;
-            tmp = Console.ReadLine();
+            tmp = Console.ReadLine().ToLower();
             while (char.TryParse(tmp, out sym) && flag)
             {
                 switch (sym)
                 {
-                    case 'W':
-                        result += Convert.ToChar(8593);
-                        tmp = Console.ReadLine();
-                        break;
                     case 'w':
                         result += Convert.ToChar(8593);
-                        tmp = Console.ReadLine();
-                        break;
-                    case 'A':
-                        result += Convert.ToChar(8592);
-                        tmp = Console.ReadLine();
+                        tmp = Console.ReadLine().ToLower();
                         break;
                     case 'a':
                         result += Convert.ToChar(8592);
-                        tmp = Console.ReadLine();
-                        break;
-                    case 'S':
-                        result += Convert.ToChar(8595);
-                        tmp = Console.ReadLine();
+                        tmp = Console.ReadLine().ToLower();
                         break;
                     case 's':
                         result += Convert.ToChar(8595);
-                        tmp = Console.ReadLine();
-                        break;
-                    case 'D':
-                        result += Convert.ToChar(8594);
-                        tmp = Console.ReadLine();
+                        tmp = Console.ReadLine().ToLower();
                         break;
                     case 'd':
                         result += Convert.ToChar(8594);
-                        tmp = Console.ReadLine();
+                        tmp = Console.ReadLine().ToLower();
                         break;
                     default:
                         flag = false;
