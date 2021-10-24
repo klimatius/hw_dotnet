@@ -1,0 +1,55 @@
+public static void Reverse(Array array)
+    {
+ // ПРОВЕРЯЕТ МАССИВ НА NULL, ЕСЛИ NULL ТО ВЫБРАСЫВАЕТ ОШИБКУ, ЕСЛИ НЕТ ТО ВЫЗЫВАЮТ ФУНКЦИЮ Reverse(Array array, int index, int length) ПЕРЕДАВАЯ МАССИВ, НОМЕР ПЕРВОЙ ПОЗИЦИИ И ДЛИНУ
+
+      if (array == null)
+        throw new ArgumentNullException(nameof (array));
+      Array.Reverse(array, array.GetLowerBound(0), array.Length);
+    }
+
+    [SecuritySafeCritical]
+    [ReliabilityContract(Consistency.MayCorruptInstance, Cer.MayFail)]
+    [__DynamicallyInvokable]
+    public static void Reverse(Array array, int index, int length)
+    {
+//СНАЧАЛА В ДАННОМ МЕТОДЕ ИДУТ ПРОВЕРКИ НА ОШИБКИ НА NULL, НА ТО, ЧТОБЫ ИНДЕКСЫ НЕ ВЫХОДИЛИ ЗА ДЛИНУ
+      if (array == null)
+        throw new ArgumentNullException(nameof (array));
+      if (index < array.GetLowerBound(0) || length < 0)
+        throw new ArgumentOutOfRangeException(index < 0 ? nameof (index) : nameof (length), Environment.GetResourceString("ArgumentOutOfRange_NeedNonNegNum"));
+      if (array.Length - (index - array.GetLowerBound(0)) < length)
+        throw new ArgumentException(Environment.GetResourceString("Argument_InvalidOffLen"));
+      if (array.Rank != 1)
+        throw new RankException(Environment.GetResourceString("Rank_MultiDimNotSupported"));
+      if (Array.TrySZReverse(array, index, length))
+        return;
+//INDEX1 = НОМЕРУ ПЕРВОЙ ПОЗИЦИИ В МАССИВУ
+      int index1 = index;
+//INDEX2 = НОМЕРУ ПОСЛЕДНЕЙ ПОЗИЦИИ В МАССИВЕ
+      int index2 = index + length - 1;
+//РЕВЕРС ДЛЯ ОБЪЕКТОВ
+      if (array is object[] objArray)
+      {
+        for (; index1 < index2; --index2)
+        {
+          object obj = objArray[index1];
+          objArray[index1] = objArray[index2];
+          objArray[index2] = obj;
+          ++index1;
+        }
+      }
+      else
+//РЕВЕРС ДЛЯ ОСТАЛЬНЫХ МАССИВОВ
+//В ОБОИХ СЛУЧАЯХ ЗАПИСЫВАЕТСЯ ВО ВРЕМЕННУЮ ПЕРЕМЕННУЮ ЗНАЧЕНИЕ, КОТОРОЕ ПРИНАДЛЕЖАЛО СЛЕДУЮЩЕМУ ЭЛЕМЕНТУ В ЦИКЛЕ ИДЯ ОТ НАЧАЛА
+//ЗАТЕМ В ЭТОТ ЭЛЕМЕНТ ЗАПИСЫВАЕТСЯ ЗНАЧЕНИЕ ЗЕРКАЛЬНОГО ЭЛЕМЕНТА ИЗ ВТОРОЙ ПОЛОВИНЫ МАССИВА, А ЗЕРКАЛЬНОМУ ЭЛЕМЕНТУ ИЗ ВТОРОЙ ПОЛОВИНЫ ИЗ ВРЕМЕННОЙ ПЕРЕМЕННОЙ 
+//ПРИСВАЕТСЯ ЗНАЧЕНИЕ ЭЛЕМЕНТА ИЗ ПЕРВОЙ ПОЛОВИНЫ МАССИВА
+      {
+        for (; index1 < index2; --index2)
+        {
+          object obj = array.GetValue(index1);
+          array.SetValue(array.GetValue(index2), index1);
+          array.SetValue(obj, index2);
+          ++index1;
+        }
+      }
+    }
